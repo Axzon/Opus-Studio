@@ -51,7 +51,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MercuryAPI, Version=1.35.0.82, Culture=neutral, PublicKeyToken=3b7d0c33b1517ad9, processorArchitecture=MSIL">
+    <Reference Include="MercuryAPI, Version=1.37.1.44, Culture=neutral, PublicKeyToken=3b7d0c33b1517ad9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThingMagicMercuryAPI\MercuryAPI.dll</HintPath>
     </Reference>

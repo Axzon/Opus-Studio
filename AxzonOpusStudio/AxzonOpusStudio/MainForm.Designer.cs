@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "01/01/2024 12:35:15 PM",
             "x"}, -1);
             this.mainTabCtrl = new System.Windows.Forms.TabControl();
@@ -901,7 +901,7 @@
             this.ReadTimeTextBox.Name = "ReadTimeTextBox";
             this.ReadTimeTextBox.Size = new System.Drawing.Size(32, 20);
             this.ReadTimeTextBox.TabIndex = 17;
-            this.ReadTimeTextBox.Text = "300";
+            this.ReadTimeTextBox.Text = "200";
             // 
             // UpdateCheckedCheckBox
             // 
@@ -2389,7 +2389,7 @@
             this.LoggedDataListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.LoggedDataListView.HideSelection = false;
             this.LoggedDataListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem2});
             this.LoggedDataListView.Location = new System.Drawing.Point(243, 3);
             this.LoggedDataListView.Name = "LoggedDataListView";
             this.LoggedDataListView.Size = new System.Drawing.Size(251, 351);
@@ -2445,7 +2445,7 @@
             this.ClientSize = new System.Drawing.Size(1299, 693);
             this.Controls.Add(this.splitContainer2);
             this.Name = "MainForm";
-            this.Text = "Axzon - Opus Studio - 2024-06-10-001";
+            this.Text = "Axzon - Opus Studio - 2024-06-26-001";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.mainTabCtrl.ResumeLayout(false);
             this.selReaderTabPage.ResumeLayout(false);

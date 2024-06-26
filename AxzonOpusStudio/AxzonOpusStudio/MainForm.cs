@@ -268,6 +268,7 @@ namespace AxzonTempSensor
 
         private ushort[] ReadTagMemByEPC(String epc, MemoryBank bank, uint wordAddress, byte numWords, out ushort[] pcWords, String label = null)
         {
+            Thread.Sleep(100);
             ushort[] dataWords = reader.ReadTagMemByEPC(epc, bank, wordAddress, numWords, GetRfPowers(), int.Parse(ReadTimeTextBox.Text), int.Parse(NumRetriesTextBox.Text), out pcWords);
 
             if (dataWords != null)
@@ -623,7 +624,9 @@ namespace AxzonTempSensor
             try
             {
                 ushort[] pcWords;
+                Thread.Sleep(100);
                 ushort[] stateAndClock = ReadTagMemByEPC(selectedEPC, MemoryBank.USER, 0x05, 3, out _, "logger state and clock");
+                Thread.Sleep(100);
                 ushort[] loggerStatusTID = ReadTagMemByEPC(selectedEPC, MemoryBank.TID, 0x08, 20, out pcWords, "logger status TID 0x08_to_0x1B");
                 opusTags[selectedEPC].Status = new OpusTagStatus(stateAndClock, loggerStatusTID, pcWords);
                 UpdateLoggerStatusPanel(opusTags[selectedEPC].Status);
@@ -846,7 +849,7 @@ namespace AxzonTempSensor
                 if (timestampWritten)
                 {
                     LoggerStartTimestampWrittenTextBox.Text = timestampDateTime.ToString("yyyy/MM/dd hh:mm:ss tt");
-                    Thread.Sleep(300);
+                    Thread.Sleep(100);
                     OpusState state = ReadLoggerState(selectedEPC);
                     stateIsReadyArmedOrLogging = (state == OpusState.READY || state == OpusState.ARMED || state == OpusState.LOGGING);
                 }
@@ -893,7 +896,9 @@ namespace AxzonTempSensor
             try
             {
                 ushort[] pcWords;
+                Thread.Sleep(100);
                 ushort[] stateAndClock = ReadTagMemByEPC(selectedEPC, MemoryBank.USER, 0x05, 3, out _, "logger state and clock");
+                Thread.Sleep(100);
                 ushort[] loggerStatusTID = ReadTagMemByEPC(selectedEPC, MemoryBank.TID, 0x08, 20, out pcWords, "logger status TID 0x08_to_0x1B");
                 OpusTagStatus tagStatus = new OpusTagStatus(stateAndClock, loggerStatusTID, pcWords);
                 opusTags[selectedEPC].Status = tagStatus;
@@ -908,6 +913,7 @@ namespace AxzonTempSensor
                     StatusBoxAppend("FAIL: Read Logger Status Operation");
                 }
 
+                Thread.Sleep(100);
                 ushort[] loggerConfig_tid_0x08_to_0x1F = ReadTagMemByEPC(selectedEPC, MemoryBank.TID, 0x08, 24, out _, "logger config TID 0x08_to_0x1F");
                 OpusTagConfiguration tagConfig = new OpusTagConfiguration(loggerConfig_tid_0x08_to_0x1F);
                 opusTags[selectedEPC].Config = tagConfig;
@@ -1112,7 +1118,9 @@ namespace AxzonTempSensor
                 try
                 {
                     ushort[] pcWords;
+                    Thread.Sleep(100);
                     ushort[] stateAndClock = ReadTagMemByEPC(selectedEPC, MemoryBank.USER, 0x05, 3, out _, "logger state and clock");
+                    Thread.Sleep(100);
                     ushort[] loggerStatusTID = ReadTagMemByEPC(selectedEPC, MemoryBank.TID, 0x08, 20, out pcWords, "logger status TID 0x08_to_0x1B");
                     OpusTagStatus tagStatus = new OpusTagStatus(stateAndClock, loggerStatusTID, pcWords);
                     opusTags[selectedEPC].Status = tagStatus;
@@ -1126,7 +1134,7 @@ namespace AxzonTempSensor
                     {
                         StatusBoxAppend("FAIL: Read Logger Status Operation");
                     }
-
+                    Thread.Sleep(100);
                     ushort[] loggerConfig_tid_0x08_to_0x1F = ReadTagMemByEPC(selectedEPC, MemoryBank.TID, 0x08, 24, out _, "logger config TID 0x08_to_0x1F");
                     OpusTagConfiguration tagConfig = new OpusTagConfiguration(loggerConfig_tid_0x08_to_0x1F);
                     opusTags[selectedEPC].Config = tagConfig;
@@ -1195,6 +1203,7 @@ namespace AxzonTempSensor
                         numberToRead = MAX_ADDRESS - bankAddress + 1;
                     }
 
+                    Thread.Sleep(100);
                     ushort[] dataWords = ReadTagMemByEPC(selectedEPC, MemoryBank.USER, (uint)bankAddress, (byte)(numberToRead), out _, "logged data. Address: " + bankAddress.ToString());
                     if (dataWords == null || dataWords.Length != numberToRead)
                     {
