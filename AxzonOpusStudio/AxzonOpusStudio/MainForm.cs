@@ -16,6 +16,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace AxzonTempSensor
 {
@@ -54,14 +55,17 @@ namespace AxzonTempSensor
             reader = null;
             ReaderSelectionComboBox.SelectedIndex = 0;
             ComPortsComboBox.SelectedIndex = ComPortsComboBox.Items.Count - 1;
-            ConnectReader();
-            mainTabCtrl.SelectedTab = opusTabPage;
+            mainTabCtrl.SelectedTab = selReaderTabPage; // opusTabPage;
 
             loggerPlot.Plot.XLabel("Time[s]");
             loggerPlot.Plot.YLabel("Temperature[°C]");
             loggerPlot.Plot.Title("Opus Temperature Logged Data");
             loggerPlot.Plot.XAxis.DateTimeFormat(true);
             loggerPlot.Refresh();
+
+            // Queue the ConnectReader() method to be executed after the Load event is finished
+            // Please note that ConnectReader() might block the UI thread...
+            // this.BeginInvoke(new Action(() => { ConnectReader(); }));
         }
 
         //---------------- HIGH LEVEL READER UTILITIES
@@ -89,10 +93,13 @@ namespace AxzonTempSensor
 
             switch (ReaderSelectionComboBox.SelectedIndex)
             {
-                case 0: // ThingMagicM6e
+                case 0: // Brady / NordicID
+                    reader = new RfidReaderBrady();
+                    break;
+                case 1: // ThingMagicM6e
                     reader = new RfidReaderM6e();
                     break;
-                case 1: // ZebraFX9600
+                case 2: // ZebraFX9600
                     reader = new RfidReaderFX6000();
                     break;
                 default:
@@ -103,12 +110,12 @@ namespace AxzonTempSensor
             string connectionURI;
             if (ComPortRadioButton.Checked)
             {
-                connectionURI = ComPortsComboBox.Text;
+                connectionURI = "ser://" + ComPortsComboBox.Text;
                 StatusBoxAppend("OPERATION: Reader connecting using serial port: " + ComPortsComboBox.Text);
             }
             else
             {
-                connectionURI = IpAddressTextBox.Text;
+                connectionURI = "tcp://" + IpAddressTextBox.Text;
                 StatusBoxAppend("OPERATION: Reader connecting using Ethernet Host Name: " + IpAddressTextBox.Text + " Port: " + EthernetPortTextBox.Text);
             }
 
@@ -118,6 +125,7 @@ namespace AxzonTempSensor
                 reader.Connect(connectionURI, uint.Parse(EthernetPortTextBox.Text));
                 StatusBoxAppend("SUCCESS: Reader connected.");
                 ConnectReaderButton.Text = "Disconnect Reader";
+                mainTabCtrl.SelectedTab = opusTabPage;
             }
             catch (Exception ex)
             {
@@ -368,12 +376,18 @@ namespace AxzonTempSensor
         {
             switch (ReaderSelectionComboBox.SelectedIndex)
             {
-                case 0: // ThingMagicM6e
+                case 0: // Brady / NordicID
+                    IpAddressRadioButton.Checked = true;
+                    EthernetPortTextBox.Text = "4333";
+                    ReaderInfoLabel.Text = "Support all Brady / Nordic ID readers";
+                    break;
+                case 1: // ThingMagicM6e
                     ComPortRadioButton.Checked = true;
                     ReaderInfoLabel.Text = "RF Power 5 to 30 dBm";
                     break;
-                case 1: // ZebraFX9600
+                case 2: // ZebraFX9600
                     IpAddressRadioButton.Checked = true;
+                    EthernetPortTextBox.Text = "5084";
                     ReaderInfoLabel.Text = "RF Power 10 to 32 dBm";
                     break;
                 default:
@@ -1326,12 +1340,13 @@ namespace AxzonTempSensor
             string sPowers = RfPowersTextBox.Text;
             if (sPowers == "")
             {
-                sPowers = "7.0, 9.0";
+                sPowers = "7.0; 9.0";
                 RfPowersTextBox.Text = sPowers;
                 Application.DoEvents();
             }
 
-            double[] powers = Array.ConvertAll<string, double>(sPowers.Split(','), double.Parse);
+            string[] powerStrings = sPowers.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
+            double[] powers = Array.ConvertAll(powerStrings, p => double.Parse(p, System.Globalization.CultureInfo.InvariantCulture));
             return powers;
         }
 
@@ -2558,78 +2573,6 @@ namespace AxzonTempSensor
             if (tagInfo.valid) Info = tagInfo;
         }
     }
-
-    public class RfidUtility
-    {
-        public static byte[] StringInHexToByteArray(string str)
-        {
-            if (str == null || str.Length == 0) return new byte[0];
-            if (str.Length % 2 != 0) return null; // It should be interpreted as an error
-            int numBytes = str.Length / 2;
-            byte[] byteArray = new byte[numBytes];
-            for (int i = 0; i < numBytes; i++)
-            {
-                byteArray[i] = Convert.ToByte(str.Substring(i * 2, 2), 16);
-            }
-            return byteArray;
-        }
-
-        public static byte[] UshortArrayToByteArray(ushort[] shortArray)
-        {
-            if (shortArray == null) return null;
-            byte[] byteArray = new byte[shortArray.Length * 2];
-            for (int i = 0; i < shortArray.Length; i++)
-            {
-                byteArray[2 * i] = (byte)((shortArray[i] >> 8) & 0xFF);
-                byteArray[2 * i + 1] = (byte)(shortArray[i] & 0xFF);
-            }
-            return byteArray;
-        }
-
-        public static ushort[] ByteArrayToUshortArray(byte[] byteArray)
-        {
-            if (byteArray == null) return null;
-            ushort[] shortArray = new ushort[byteArray.Length / 2];
-            for (int i = 0; i < shortArray.Length; i++)
-            {
-                shortArray[i] = (ushort)(((byteArray[2 * i] & 0x00FF) << 8) | (byteArray[2 * i + 1] & 0x00FF));
-            }
-            return shortArray;
-        }
-
-        // EPC Gen2 CRC-16 Algorithm
-        // Poly = 0x1021; Initial Value = 0xFFFF; XOR Output;
-        public static ushort Crc16(byte[] inputBytes)
-        {
-            ushort crcVal = 0xFFFF;
-            foreach (byte inputByte in inputBytes)
-            {
-                crcVal = (ushort)(crcVal ^ (((uint)inputByte) << 8));
-                for (int i = 0; i < 8; i++)
-                {
-                    if ((crcVal & 0x8000) == 0x8000)
-                    {
-                        crcVal = (ushort)((crcVal << 1) ^ 0x1021);
-                    }
-                    else
-                    {
-                        crcVal = (ushort)(crcVal << 1);
-                    }
-                }
-                crcVal = (ushort)(crcVal & 0xffff);
-            }
-            crcVal = (ushort)(crcVal ^ 0xffff);
-            return crcVal;
-        }
-
-        public static ushort Crc16(ushort[] inputUshorts)
-        {
-            return Crc16(UshortArrayToByteArray(inputUshorts));
-        }
-    }
-
-    //******************************************************************************
-    //-------- READER INTERFACE and READER IMPLEMENTATIONS
 
     public enum MemoryBank
     {

@@ -53,14 +53,16 @@ namespace AxzonTempSensor
             GC.SuppressFinalize(this);
         }
 
-        public Reader TheReader => reader;
-
         public int MaxNumberOfReadWords => 64;
 
         public void Connect(string comPortOrHostName, uint ipPortNumber = 0)
         {
-            reader = Reader.Create("tmr:///" + comPortOrHostName);
-            reader.Connect();
+            if (comPortOrHostName.StartsWith("ser://"))
+            {
+                comPortOrHostName = "tmr:///" + comPortOrHostName.Substring(6);
+                reader = Reader.Create(comPortOrHostName);
+                reader.Connect();
+            }
         }
 
         public void Disconnect()

@@ -11,14 +11,11 @@
  */
 using System;
 using System.Collections.Generic;
-using ThingMagic;
 
 namespace AxzonTempSensor
 {
     public interface IRfidReader : IDisposable
     {
-        Reader TheReader { get; } // TODO: remove at the end
-
         int MaxNumberOfReadWords { get; }
 
         void Connect(string comPortOrHostName, uint ipPortNumber = 0);
@@ -60,7 +57,5 @@ namespace AxzonTempSensor
         void SetSetupForInventoryOpusTags(int initialQVal, bool includeSensorMeas);
 
         List<OpusTagInfo> InventoryOpusTags(int readTimeInMs, bool includeSensorMeas);
-
     }
-
 }

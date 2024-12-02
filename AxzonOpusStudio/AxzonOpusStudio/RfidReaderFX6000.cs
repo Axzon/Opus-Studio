@@ -13,8 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using ThingMagic;
 using Symbol.RFID3;
+using ThingMagic;
 
 namespace AxzonTempSensor
 {
@@ -65,28 +65,30 @@ namespace AxzonTempSensor
             GC.SuppressFinalize(this);
         }
 
-        public Reader TheReader => null; // TODO: review DELETE
-
         public int MaxNumberOfReadWords => 128;
 
         public void Connect(string comPortOrHostName, uint ipPortNumber = 0)
         {
-            reader = new RFIDReader(comPortOrHostName, ipPortNumber, 2000);
-            reader.Connect();
+            if (comPortOrHostName.StartsWith("tcp://"))
+            {
+                comPortOrHostName = comPortOrHostName.Substring(6);
+                reader = new RFIDReader(comPortOrHostName, ipPortNumber, 2000);
+                reader.Connect();
 
-            // Register for Read Notification
-            reader.Events.ReadNotify += Events_ReadNotify;
-            reader.Events.AttachTagDataWithReadEvent = false;
+                // Register for Read Notification
+                reader.Events.ReadNotify += Events_ReadNotify;
+                reader.Events.AttachTagDataWithReadEvent = false;
 
-            // Register for Status Notification
-            reader.Events.StatusNotify += Events_StatusNotify;
-            reader.Events.NotifyAccessStartEvent = true;
-            reader.Events.NotifyAccessStopEvent = true;
+                // Register for Status Notification
+                reader.Events.StatusNotify += Events_StatusNotify;
+                reader.Events.NotifyAccessStartEvent = true;
+                reader.Events.NotifyAccessStopEvent = true;
 
-            // Create Event to signify access sequence operation complete
-            AccessComplete = new AutoResetEvent(false);
+                // Create Event to signify access sequence operation complete
+                AccessComplete = new AutoResetEvent(false);
 
-            tagInfos.Clear();
+                tagInfos.Clear();
+            }
         }
 
         public void Disconnect()

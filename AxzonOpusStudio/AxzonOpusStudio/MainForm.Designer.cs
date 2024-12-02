@@ -65,6 +65,7 @@
             this.Antenna3CheckBox = new System.Windows.Forms.CheckBox();
             this.Antenna2CheckBox = new System.Windows.Forms.CheckBox();
             this.Antenna1CheckBox = new System.Windows.Forms.CheckBox();
+            this.tabPageBradyNordicID = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.OpenRadioButton = new System.Windows.Forms.RadioButton();
@@ -370,7 +371,7 @@
             this.IpAddressTextBox.Name = "IpAddressTextBox";
             this.IpAddressTextBox.Size = new System.Drawing.Size(149, 20);
             this.IpAddressTextBox.TabIndex = 7;
-            this.IpAddressTextBox.Text = "172.16.1.235";
+            this.IpAddressTextBox.Text = "192.168.1.73";
             // 
             // ComPortRadioButton
             // 
@@ -447,6 +448,7 @@
             this.ReaderSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ReaderSelectionComboBox.FormattingEnabled = true;
             this.ReaderSelectionComboBox.Items.AddRange(new object[] {
+            "Brady / NordicID",
             "ThingMagic M6e",
             "Zebra FX9600"});
             this.ReaderSelectionComboBox.Location = new System.Drawing.Point(16, 32);
@@ -458,6 +460,7 @@
             // ReaderTabControl
             // 
             this.ReaderTabControl.Controls.Add(this.tabPage4);
+            this.ReaderTabControl.Controls.Add(this.tabPageBradyNordicID);
             this.ReaderTabControl.Controls.Add(this.tabPage6);
             this.ReaderTabControl.Controls.Add(this.tabPage7);
             this.ReaderTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -640,6 +643,15 @@
             this.Antenna1CheckBox.Text = "01";
             this.Antenna1CheckBox.UseVisualStyleBackColor = true;
             this.Antenna1CheckBox.CheckedChanged += new System.EventHandler(this.AntennaCheckBox_CheckedChanged);
+            // 
+            // tabPageBradyNordicID
+            // 
+            this.tabPageBradyNordicID.Location = new System.Drawing.Point(4, 22);
+            this.tabPageBradyNordicID.Name = "tabPageBradyNordicID";
+            this.tabPageBradyNordicID.Size = new System.Drawing.Size(1271, 426);
+            this.tabPageBradyNordicID.TabIndex = 3;
+            this.tabPageBradyNordicID.Text = "Brady / Nordic ID";
+            this.tabPageBradyNordicID.UseVisualStyleBackColor = true;
             // 
             // tabPage6
             // 
@@ -1888,6 +1900,7 @@
             // 
             // SaveConfigurationButton
             // 
+            this.SaveConfigurationButton.Enabled = false;
             this.SaveConfigurationButton.Location = new System.Drawing.Point(11, 139);
             this.SaveConfigurationButton.Name = "SaveConfigurationButton";
             this.SaveConfigurationButton.Size = new System.Drawing.Size(149, 30);
@@ -1909,6 +1922,7 @@
             // 
             // LoadConfigurationButton
             // 
+            this.LoadConfigurationButton.Enabled = false;
             this.LoadConfigurationButton.Location = new System.Drawing.Point(11, 101);
             this.LoadConfigurationButton.Name = "LoadConfigurationButton";
             this.LoadConfigurationButton.Size = new System.Drawing.Size(149, 30);
@@ -2445,7 +2459,7 @@
             this.ClientSize = new System.Drawing.Size(1299, 693);
             this.Controls.Add(this.splitContainer2);
             this.Name = "MainForm";
-            this.Text = "Axzon - Opus Studio - 2024-06-26-001";
+            this.Text = "Axzon - Opus Studio - 2024-11-21-001";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.mainTabCtrl.ResumeLayout(false);
             this.selReaderTabPage.ResumeLayout(false);
@@ -2705,6 +2719,7 @@
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.ComboBox ReaderSelectionComboBox;
         private System.Windows.Forms.Label ReaderInfoLabel;
+        private System.Windows.Forms.TabPage tabPageBradyNordicID;
     }
 }
 
