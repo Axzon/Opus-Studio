@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34114.132
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AxzonOpusStudio", "AxzonOpusStudio\AxzonOpusStudio.csproj", "{812B0574-4912-4A9B-B9E0-25D721E19F61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LedControl", "LEDs\LedControl.csproj", "{B5E138B3-88F7-4858-ABBB-0056B4EEAACA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{812B0574-4912-4A9B-B9E0-25D721E19F61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{812B0574-4912-4A9B-B9E0-25D721E19F61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{812B0574-4912-4A9B-B9E0-25D721E19F61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{812B0574-4912-4A9B-B9E0-25D721E19F61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5E138B3-88F7-4858-ABBB-0056B4EEAACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5E138B3-88F7-4858-ABBB-0056B4EEAACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5E138B3-88F7-4858-ABBB-0056B4EEAACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5E138B3-88F7-4858-ABBB-0056B4EEAACA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6A768427-33BA-4708-AB42-0A2B9B84F5A4}
+	EndGlobalSection
+EndGlobal

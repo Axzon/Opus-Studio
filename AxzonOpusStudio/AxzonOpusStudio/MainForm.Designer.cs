@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "01/01/2024 12:35:15 PM",
             "x"}, -1);
             this.mainTabCtrl = new System.Windows.Forms.TabControl();
@@ -47,8 +47,8 @@
             this.ComPortsComboBox = new System.Windows.Forms.ComboBox();
             this.RefreshComPortsButton = new System.Windows.Forms.Button();
             this.groupBox20 = new System.Windows.Forms.GroupBox();
-            this.ReaderInfoLabel = new System.Windows.Forms.Label();
-            this.ReaderSelectionComboBox = new System.Windows.Forms.ComboBox();
+            this.ZebraFX9600RadioButton = new System.Windows.Forms.RadioButton();
+            this.ThingMagicM6eRadioButton = new System.Windows.Forms.RadioButton();
             this.ReaderTabControl = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -65,7 +65,6 @@
             this.Antenna3CheckBox = new System.Windows.Forms.CheckBox();
             this.Antenna2CheckBox = new System.Windows.Forms.CheckBox();
             this.Antenna1CheckBox = new System.Windows.Forms.CheckBox();
-            this.tabPageBradyNordicID = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.OpenRadioButton = new System.Windows.Forms.RadioButton();
@@ -371,7 +370,7 @@
             this.IpAddressTextBox.Name = "IpAddressTextBox";
             this.IpAddressTextBox.Size = new System.Drawing.Size(149, 20);
             this.IpAddressTextBox.TabIndex = 7;
-            this.IpAddressTextBox.Text = "192.168.1.73";
+            this.IpAddressTextBox.Text = "172.16.1.235";
             // 
             // ComPortRadioButton
             // 
@@ -424,8 +423,8 @@
             // 
             // groupBox20
             // 
-            this.groupBox20.Controls.Add(this.ReaderInfoLabel);
-            this.groupBox20.Controls.Add(this.ReaderSelectionComboBox);
+            this.groupBox20.Controls.Add(this.ZebraFX9600RadioButton);
+            this.groupBox20.Controls.Add(this.ThingMagicM6eRadioButton);
             this.groupBox20.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox20.Location = new System.Drawing.Point(3, 3);
             this.groupBox20.Name = "groupBox20";
@@ -434,33 +433,31 @@
             this.groupBox20.TabStop = false;
             this.groupBox20.Text = "Select Reader";
             // 
-            // ReaderInfoLabel
+            // ZebraFX9600RadioButton
             // 
-            this.ReaderInfoLabel.Location = new System.Drawing.Point(16, 69);
-            this.ReaderInfoLabel.Margin = new System.Windows.Forms.Padding(3, 13, 3, 0);
-            this.ReaderInfoLabel.Name = "ReaderInfoLabel";
-            this.ReaderInfoLabel.Size = new System.Drawing.Size(160, 58);
-            this.ReaderInfoLabel.TabIndex = 5;
-            this.ReaderInfoLabel.Text = "ReaderInfoLabel";
+            this.ZebraFX9600RadioButton.Location = new System.Drawing.Point(16, 79);
+            this.ZebraFX9600RadioButton.Name = "ZebraFX9600RadioButton";
+            this.ZebraFX9600RadioButton.Size = new System.Drawing.Size(151, 39);
+            this.ZebraFX9600RadioButton.TabIndex = 6;
+            this.ZebraFX9600RadioButton.Text = "Zebra FX9600\r\n(RF Power 10 to 32 dBm)";
+            this.ZebraFX9600RadioButton.UseVisualStyleBackColor = true;
+            this.ZebraFX9600RadioButton.CheckedChanged += new System.EventHandler(this.ZebraFX9600RadioButton_CheckedChanged);
             // 
-            // ReaderSelectionComboBox
+            // ThingMagicM6eRadioButton
             // 
-            this.ReaderSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ReaderSelectionComboBox.FormattingEnabled = true;
-            this.ReaderSelectionComboBox.Items.AddRange(new object[] {
-            "Brady / NordicID",
-            "ThingMagic M6e",
-            "Zebra FX9600"});
-            this.ReaderSelectionComboBox.Location = new System.Drawing.Point(16, 32);
-            this.ReaderSelectionComboBox.Name = "ReaderSelectionComboBox";
-            this.ReaderSelectionComboBox.Size = new System.Drawing.Size(160, 21);
-            this.ReaderSelectionComboBox.TabIndex = 7;
-            this.ReaderSelectionComboBox.SelectedIndexChanged += new System.EventHandler(this.ReaderSelectionComboBox_SelectedIndexChanged);
+            this.ThingMagicM6eRadioButton.Checked = true;
+            this.ThingMagicM6eRadioButton.Location = new System.Drawing.Point(16, 33);
+            this.ThingMagicM6eRadioButton.Name = "ThingMagicM6eRadioButton";
+            this.ThingMagicM6eRadioButton.Size = new System.Drawing.Size(151, 40);
+            this.ThingMagicM6eRadioButton.TabIndex = 5;
+            this.ThingMagicM6eRadioButton.TabStop = true;
+            this.ThingMagicM6eRadioButton.Text = "ThingMagic M6e \r\n(RF Power 5 to 30 dBm)";
+            this.ThingMagicM6eRadioButton.UseVisualStyleBackColor = true;
+            this.ThingMagicM6eRadioButton.CheckedChanged += new System.EventHandler(this.ThingMagicM6eRadioButton_CheckedChanged);
             // 
             // ReaderTabControl
             // 
             this.ReaderTabControl.Controls.Add(this.tabPage4);
-            this.ReaderTabControl.Controls.Add(this.tabPageBradyNordicID);
             this.ReaderTabControl.Controls.Add(this.tabPage6);
             this.ReaderTabControl.Controls.Add(this.tabPage7);
             this.ReaderTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -643,15 +640,6 @@
             this.Antenna1CheckBox.Text = "01";
             this.Antenna1CheckBox.UseVisualStyleBackColor = true;
             this.Antenna1CheckBox.CheckedChanged += new System.EventHandler(this.AntennaCheckBox_CheckedChanged);
-            // 
-            // tabPageBradyNordicID
-            // 
-            this.tabPageBradyNordicID.Location = new System.Drawing.Point(4, 22);
-            this.tabPageBradyNordicID.Name = "tabPageBradyNordicID";
-            this.tabPageBradyNordicID.Size = new System.Drawing.Size(1271, 426);
-            this.tabPageBradyNordicID.TabIndex = 3;
-            this.tabPageBradyNordicID.Text = "Brady / Nordic ID";
-            this.tabPageBradyNordicID.UseVisualStyleBackColor = true;
             // 
             // tabPage6
             // 
@@ -1900,7 +1888,6 @@
             // 
             // SaveConfigurationButton
             // 
-            this.SaveConfigurationButton.Enabled = false;
             this.SaveConfigurationButton.Location = new System.Drawing.Point(11, 139);
             this.SaveConfigurationButton.Name = "SaveConfigurationButton";
             this.SaveConfigurationButton.Size = new System.Drawing.Size(149, 30);
@@ -1922,7 +1909,6 @@
             // 
             // LoadConfigurationButton
             // 
-            this.LoadConfigurationButton.Enabled = false;
             this.LoadConfigurationButton.Location = new System.Drawing.Point(11, 101);
             this.LoadConfigurationButton.Name = "LoadConfigurationButton";
             this.LoadConfigurationButton.Size = new System.Drawing.Size(149, 30);
@@ -2403,7 +2389,7 @@
             this.LoggedDataListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.LoggedDataListView.HideSelection = false;
             this.LoggedDataListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem2});
             this.LoggedDataListView.Location = new System.Drawing.Point(243, 3);
             this.LoggedDataListView.Name = "LoggedDataListView";
             this.LoggedDataListView.Size = new System.Drawing.Size(251, 351);
@@ -2459,7 +2445,7 @@
             this.ClientSize = new System.Drawing.Size(1299, 693);
             this.Controls.Add(this.splitContainer2);
             this.Name = "MainForm";
-            this.Text = "Axzon - Opus Studio - 2024-11-21-001";
+            this.Text = "Axzon - Opus Studio - 2024-06-26-001";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.mainTabCtrl.ResumeLayout(false);
             this.selReaderTabPage.ResumeLayout(false);
@@ -2704,6 +2690,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.GroupBox groupBox20;
+        private System.Windows.Forms.RadioButton ZebraFX9600RadioButton;
+        private System.Windows.Forms.RadioButton ThingMagicM6eRadioButton;
         private System.Windows.Forms.TabControl ReaderTabControl;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage6;
@@ -2717,9 +2705,6 @@
         private System.Windows.Forms.CheckBox Antenna5CheckBox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.ComboBox ReaderSelectionComboBox;
-        private System.Windows.Forms.Label ReaderInfoLabel;
-        private System.Windows.Forms.TabPage tabPageBradyNordicID;
     }
 }
 
